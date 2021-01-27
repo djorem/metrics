@@ -11,6 +11,7 @@ local default_metrics = {
     require('metrics.default_metrics.tarantool.memory'),
     require('metrics.default_metrics.tarantool.spaces'),
     require('metrics.default_metrics.tarantool.fibers'),
+    require('metrics.tarantool.vinyl')
 }
 
 local function enable()
