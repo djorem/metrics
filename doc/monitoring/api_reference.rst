@@ -166,7 +166,7 @@ Summary
 
 ..  module:: metrics
 
-..  function:: summary(name [, help, objectives])
+..  function:: summary(name [, help, objectives, max_age, age_buckets])
 
     Registers a new summary. Quantile computation is based on the algorithm `"Effective computation of biased quantiles over data streams" <https://ieeexplore.ieee.org/document/1410103>`_
 
@@ -174,6 +174,8 @@ Summary
     :param string   help: Help description.
     :param table objectives: Quantiles to observe in the form ``{quantile = error, ... }``.
                           For example: ``{[0.5]=0.01, [0.9]=0.01, [0.99]=0.01}``
+    :param number max_age: Lifetime of bucket in sliding window, in seconds
+    :param number age_buckets: Configures how many buckets summary has in sliding window
 
     :return: Summary object
 

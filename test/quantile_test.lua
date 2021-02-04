@@ -104,3 +104,11 @@ g.test_package_reload = function()
     local ok, quantile_package = pcall(require, 'metrics.quantile')
     t.assert(ok, quantile_package)
 end
+
+g.test_query_on_empty_quantile = function()
+    local emptyQuantile = quantile.NewTargeted({[0.5]=0.01, [0.9]=0.01, [0.99]=0.01})
+
+    local res = quantile.Query(emptyQuantile, 0.99)
+
+    t.assert_equals(res, math.huge)
+end
