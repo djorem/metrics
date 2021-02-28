@@ -55,6 +55,7 @@ jobs:
       - name: install Taranool
         run: |
           curl -L https://tarantool.io/aYJZbH/release/2.3/installer.sh | bash
+          apt-get install -y tarantool
 
       - uses: actions/setup-go@v2
         with:
@@ -62,5 +63,5 @@ jobs:
 
       - name: promtool test
         run: |
-          go get github.com/prometheus/prometheus/cmd/promtool
+          GO111MODULE=on go get github.com/prometheus/prometheus@a6be548dbc17780d562a39c0e4bd0bd4c00ad6e2
           make test_promtool
