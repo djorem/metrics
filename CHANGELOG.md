@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - zone label support for Tarantool Cartridge >= '2.4.0'
 
+### Fixed
+- `ipairs` instead of `pairs` while iteration in `histogram`
+
 ## [0.7.0] - 2021-02-09
 ### Added
 - instance health check plugin

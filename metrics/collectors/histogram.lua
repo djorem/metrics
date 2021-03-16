@@ -9,8 +9,7 @@ local Histogram = Shared:new_class('histogram', {'observe_latency'})
 
 function Histogram.check_buckets(buckets)
     local prev = -math.huge
-    for k, v in pairs(buckets) do
-        if type(k) ~= 'number' then return false end
+    for _, v in ipairs(buckets) do
         if type(v) ~= 'number' then return false end
         if v <= 0 then return false end
         if prev > v then return false end
@@ -23,7 +22,6 @@ function Histogram:new(name, help, buckets)
     local obj = Shared.new(self, name, help)
 
     obj.buckets = buckets or DEFAULT_BUCKETS
-    table.sort(obj.buckets)
     if obj.buckets[#obj.buckets] ~= INF then
         obj.buckets[#obj.buckets+1] = INF
     end
@@ -48,7 +46,7 @@ function Histogram:observe(num, label_pairs)
     self.count_collector:inc(1, label_pairs)
     self.sum_collector:inc(num, label_pairs)
 
-    for _, bucket in pairs(self.buckets) do
+    for _, bucket in ipairs(self.buckets) do
         local bkt_label_pairs = table.deepcopy(label_pairs)
         bkt_label_pairs.le = bucket
 
@@ -64,13 +62,13 @@ end
 
 function Histogram:collect()
     local result = {}
-    for _, obs in pairs(self.count_collector:collect()) do
+    for _, obs in ipairs(self.count_collector:collect()) do
         table.insert(result, obs)
     end
-    for _, obs in pairs(self.sum_collector:collect()) do
+    for _, obs in ipairs(self.sum_collector:collect()) do
         table.insert(result, obs)
     end
-    for _, obs in pairs(self.bucket_collector:collect()) do
+    for _, obs in ipairs(self.bucket_collector:collect()) do
         table.insert(result, obs)
     end
     return result
